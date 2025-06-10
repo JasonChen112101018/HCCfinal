@@ -19,21 +19,23 @@ for pkg in "${packages[@]}"; do
   ros2 pkg create --build-type ament_python $pkg
 done
 
-# === 3. 加入相依與初始化檔案 ===
+# === 3. 初始化每個 Python package ===
 for pkg in "${packages[@]}"; do
-  cd $SRC/$pkg
+  cd "$SRC/$pkg"
 
-  # 添加依賴到 package.xml
+  # === package.xml: 添加依賴 + build type ===
   sed -i '/<\/package>/i\
+  <build_type>ament_python</build_type>\n\
   <exec_depend>rclpy</exec_depend>\n\
   <exec_depend>std_msgs</exec_depend>\n\
   <exec_depend>geometry_msgs</exec_depend>\n\
   <exec_depend>sensor_msgs</exec_depend>\n\
   <exec_depend>nav_msgs</exec_depend>' package.xml
 
-  # 建立 Python 主程式結構
+  # === 建立 Python 模組 ===
   mkdir -p $pkg
   touch $pkg/__init__.py
+
   cat <<EOF > $pkg/main.py
 import rclpy
 from rclpy.node import Node
@@ -59,13 +61,41 @@ def main(args=None):
     rclpy.shutdown()
 EOF
 
-  # 修改 setup.py
-  sed -i "s/packages=\[.*\]/packages=['$pkg']/" setup.py
-  sed -i "/entry_points=/a\        'console_scripts': ['${pkg}_main = $pkg.main:main']," setup.py
+  # === setup.py: 設定 console_scripts + data_files ===
+  cat <<EOF > setup.py
+from setuptools import setup
 
-  # 加入 setup.cfg
+package_name = '$pkg'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/' + package_name, ['package.xml']),
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='you',
+    maintainer_email='you@example.com',
+    description='Auto-generated package',
+    license='MIT',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            '${pkg}_main = $pkg.main:main',
+        ],
+    },
+)
+EOF
+
+  # === setup.cfg ===
   echo -e "[develop]\nscript_dir=\n[install]\ninstall_scripts=" > setup.cfg
 
+  # === 建立 resource index 檔案 ===
+  mkdir -p resource
+  touch resource/$pkg
 done
 
 # === 4. 回到 workspace 並 build ===
