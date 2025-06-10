@@ -1,1 +1,35 @@
-wget https://huggingface.co/ros-templates/tello_node/resolve/main/tello_controller_node.zip
+[0.439s] WARNING:colcon.colcon_core.package_identification:Failed to parse ROS package manifest in 'src/apriltag_detector_node': Error(s) in package 'src/apriltag_detector_node/package.xml':
+Error(s):
+- The manifest of package "apriltag_detector_node" (with format version 3) must not contain the following tags: build_type
+[0.989s] WARNING:colcon.colcon_core.package_identification:Failed to parse ROS package manifest in 'src/navigation_node': Error(s) in package 'src/navigation_node/package.xml':
+Error(s):
+- The manifest of package "navigation_node" (with format version 3) must not contain the following tags: build_type
+[1.282s] WARNING:colcon.colcon_core.package_identification:Failed to parse ROS package manifest in 'src/tello_controller_node': Error(s) in package 'src/tello_controller_node/package.xml':
+Error(s):
+- The manifest of package "tello_controller_node" (with format version 3) must not contain the following tags: build_type
+[1.554s] WARNING:colcon.colcon_core.package_identification:Failed to parse ROS package manifest in 'src/yolov11_detector_node': Error(s) in package 'src/yolov11_detector_node/package.xml':
+Error(s):
+- The manifest of package "yolov11_detector_node" (with format version 3) must not contain the following tags: build_type
+Starting >>> mission_manager_node
+running develop                                    
+running egg_info                                   
+writing mission_manager_node.egg-info/PKG-INFO
+writing dependency_links to mission_manager_node.egg-info/dependency_links.txt
+writing entry points to mission_manager_node.egg-info/entry_points.txt
+writing requirements to mission_manager_node.egg-info/requires.txt
+writing top-level names to mission_manager_node.egg-info/top_level.txt
+reading manifest file 'mission_manager_node.egg-info/SOURCES.txt'
+writing manifest file 'mission_manager_node.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/vboxuser/workspace/install/mission_manager_node/lib/python3.8/site-packages/site.py
+Creating /home/vboxuser/workspace/install/mission_manager_node/lib/python3.8/site-packages/mission-manager-node.egg-link (link to .)
+Installing mission_manager_node_main script to     
+error: [Errno 2] No such file or directory: ''
+--- stderr: mission_manager_node
+error: [Errno 2] No such file or directory: ''
+---
+Failed   <<< mission_manager_node [1.51s, exited with code 1]
+
+Summary: 0 packages finished [3.27s]
+  1 package failed: mission_manager_node
+  1 package had stderr output: mission_manager_node
