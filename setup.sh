@@ -23,7 +23,7 @@ done
 for pkg in "${packages[@]}"; do
   cd "$SRC/$pkg"
 
-  # === package.xml: 添加依賴 + build type ===
+  # === 修改 package.xml：加上依賴與 build_type ===
   sed -i '/<\/package>/i\
   <build_type>ament_python</build_type>\n\
   <exec_depend>rclpy</exec_depend>\n\
@@ -32,7 +32,7 @@ for pkg in "${packages[@]}"; do
   <exec_depend>sensor_msgs</exec_depend>\n\
   <exec_depend>nav_msgs</exec_depend>' package.xml
 
-  # === 建立 Python 模組 ===
+  # === 建立 Python 套件結構 ===
   mkdir -p $pkg
   touch $pkg/__init__.py
 
@@ -61,7 +61,11 @@ def main(args=None):
     rclpy.shutdown()
 EOF
 
-  # === setup.py: 設定 console_scripts + data_files ===
+  # === 正確建立 resource 檔案 ===
+  mkdir -p resource
+  touch "resource/$pkg"
+
+  # === setup.py ===
   cat <<EOF > setup.py
 from setuptools import setup
 
@@ -70,7 +74,7 @@ package_name = '$pkg'
 setup(
     name=package_name,
     version='0.0.0',
-    packages=[package_name],
+    packages=['$pkg'],
     data_files=[
         ('share/' + package_name, ['package.xml']),
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -93,11 +97,9 @@ EOF
   # === setup.cfg ===
   echo -e "[develop]\nscript_dir=\n[install]\ninstall_scripts=" > setup.cfg
 
-  # === 建立 resource index 檔案 ===
-  mkdir -p resource
-  touch resource/$pkg
 done
 
 # === 4. 回到 workspace 並 build ===
 cd $WORKSPACE
+rm -rf build/ install/ log/
 colcon build
