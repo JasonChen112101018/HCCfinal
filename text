@@ -1,0 +1,30 @@
+Starting >>> tello_controller_node
+--- output: tello_controller_node                   
+running egg_info
+writing ../../build/tello_controller_node/tello_controller_node.egg-info/PKG-INFO
+writing dependency_links to ../../build/tello_controller_node/tello_controller_node.egg-info/dependency_links.txt
+writing entry points to ../../build/tello_controller_node/tello_controller_node.egg-info/entry_points.txt
+writing requirements to ../../build/tello_controller_node/tello_controller_node.egg-info/requires.txt
+writing top-level names to ../../build/tello_controller_node/tello_controller_node.egg-info/top_level.txt
+reading manifest file '../../build/tello_controller_node/tello_controller_node.egg-info/SOURCES.txt'
+writing manifest file '../../build/tello_controller_node/tello_controller_node.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+running install_egg_info
+removing '/home/vboxuser/workspace/install/tello_controller_node/lib/python3.8/site-packages/tello_controller_node-0.0.0-py3.8.egg-info' (and everything under it)
+Copying ../../build/tello_controller_node/tello_controller_node.egg-info to /home/vboxuser/workspace/install/tello_controller_node/lib/python3.8/site-packages/tello_controller_node-0.0.0-py3.8.egg-info
+running install_scripts
+Installing tello_controller_node_main script to 
+error: [Errno 2] No such file or directory: ''
+---
+--- stderr: tello_controller_node
+error: [Errno 2] No such file or directory: ''
+---
+Failed   <<< tello_controller_node [1.13s, exited with code 1]
+
+Summary: 0 packages finished [1.47s]
+  1 package failed: tello_controller_node
+  1 package had stderr output: tello_controller_node
